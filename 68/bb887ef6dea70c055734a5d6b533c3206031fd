@@ -1,0 +1,25 @@
+README.md
+  s_5ce2f022100691::t_efdf75d611980c 232-233
+app/main.py
+  s_5ce2f022100691::t_6baeb38d200436 1-2,5,12-17
+app/services/match_service.py
+  s_5ce2f022100691::t_c1f6a741bbde93 14-31
+  s_5ce2f022100691::t_1d0bdc8e86adcd 88
+  s_5ce2f022100691::t_272d896e79ab7d 275
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "68bb887ef6dea70c055734a5d6b533c3206031fd",
+  "prompts": {},
+  "sessions": {
+    "s_5ce2f022100691": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fe0036d3-b794-4e36-b8c8-12b3650b0cd2",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "sravangunapati <sravangunapati0707@gmail.com>"
+    }
+  }
+}
