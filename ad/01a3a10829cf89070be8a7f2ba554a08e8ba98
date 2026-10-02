@@ -1,0 +1,45 @@
+README.md
+  s_5ce2f022100691::t_39abecd25c52d1 1-239
+.gitignore
+  s_5ce2f022100691::t_4cfdd6280f7ff8 1-21
+app/api/health.py
+  s_5ce2f022100691::t_5b1c2e17e060c4 1-12
+app/api/indexing.py
+  s_5ce2f022100691::t_2557111e35c34b 1-42
+app/api/matching.py
+  s_5ce2f022100691::t_c7f8b7bd219c41 1-92
+app/config.py
+  s_5ce2f022100691::t_b49b745d66f2c9 1-18
+app/core/es_mapping.py
+  s_5ce2f022100691::t_64839002ba3798 1-43
+app/core/normalize.py
+  s_5ce2f022100691::t_a3397c30f46a04 1-39
+app/jobs/store.py
+  s_5ce2f022100691::t_68f0740c15bdfa 1-28
+app/schemas/indexing.py
+  s_5ce2f022100691::t_43dbadef12b3fc 1-20
+app/schemas/matching.py
+  s_5ce2f022100691::t_728a3ae1603ef1 1-51
+app/services/aliases.py
+  s_5ce2f022100691::t_82fd1c13b6d6ca 1-44
+app/services/index_service.py
+  s_5ce2f022100691::t_c28b0b4bc50155 1-72
+app/services/match_service.py
+  s_5ce2f022100691::t_fb266afbad7e2c 1-266
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ad01a3a10829cf89070be8a7f2ba554a08e8ba98",
+  "prompts": {},
+  "sessions": {
+    "s_5ce2f022100691": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fe0036d3-b794-4e36-b8c8-12b3650b0cd2",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "sravangunapati <sravangunapati0707@gmail.com>"
+    }
+  }
+}
