@@ -11,6 +11,24 @@ from app.schemas.matching import Candidate, ErpRow, MatchResponse, MatchResult, 
 from app.services.aliases import AliasModel, learn_aliases
 
 BATCH = 500
+
+
+class SearchError(RuntimeError):
+    """Elasticsearch could not run a search, e.g. the catalog has not been indexed yet."""
+
+
+def search_all(searches: list[dict]) -> list[dict]:
+    """Run an _msearch and fail loudly: msearch reports a missing index inside each response, not as an error."""
+    responses = es.msearch(searches=searches)["responses"]
+    for response in responses:
+        if "error" in response:
+            error = response["error"]
+            if error.get("type") == "index_not_found_exception":
+                raise SearchError(f"Index '{settings.es_index_alias}' not found. Index the catalog first: POST /api/v1/index/jobs")
+            raise SearchError(f"Elasticsearch search failed: {error.get('reason', error)}")
+    return responses
+
+
 UNITS = r'"|\'|IN|FT|OZ|GAL|QT|LBS?|TON|PCS?|PK|MM|CM|W|V|A|HP|PSI'
 SIZE = re.compile(rf'\d+(?:[./]\d+)?(?:{UNITS})', re.IGNORECASE)
 
@@ -67,7 +85,7 @@ def retrieve(rows: list[ErpRow], size: int = 20):
         searches = []
         for row in rows[start:start + BATCH]:
             searches += [{"index": settings.es_index_alias}, build_query(row, size)]
-        for response in es.msearch(searches=searches)["responses"]:
+        for response in search_all(searches):
             hits = response.get("hits", {}).get("hits", [])
             results.append([{"es_score": h["_score"], **h["_source"]} for h in hits])
     return results
@@ -254,7 +272,7 @@ def semantic_fallback(rows: list[ErpRow], results: list[MatchResult], top_k: int
         searches += [{"index": settings.es_index_alias},
                      {"size": top_k, "_source": {"excludes": ["description_vector"]},
                       "knn": {"field": "description_vector", "query_vector": vector, "k": top_k, "num_candidates": 100}}]
-    for (row, res), response in zip(todo, es.msearch(searches=searches)["responses"]):
+    for (row, res), response in zip(todo, search_all(searches)):
         hits = response.get("hits", {}).get("hits", [])
         similar = [(2 * h["_score"] - 1, h["_source"]) for h in hits]  # ES cosine score is (1 + cos) / 2
         if not similar or similar[0][0] < settings.semantic_min:

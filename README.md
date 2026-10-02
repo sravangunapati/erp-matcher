@@ -229,8 +229,8 @@ ES_URL=http://my-es:9200 AUTO_ACCEPT=0.95 .venv/bin/uvicorn app.main:app
 
 ## Known issues and limitations
 
-- **Matching before indexing returns everything as `NO_MATCH`.** If the alias doesn't exist yet, every row
-  comes back `NO_MATCH` with confidence 1.0 instead of an error. Index first, and check the job status.
+- **Index before matching.** If no catalog has been indexed, the matching endpoints return
+  `503 {"detail": "Index 'unilog_items' not found. Index the catalog first: ..."}`.
 - **Hand-set weights.** The scoring weights were tuned on a 50-row sample. Measure accuracy on a new labelled
   file before trusting the bands.
 - **Aliases are per request.** Learned manufacturer aliases aren't stored between requests.
